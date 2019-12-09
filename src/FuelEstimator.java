@@ -8,7 +8,8 @@ public class FuelEstimator {
 
     public static void main(String args[]) {
         int i, x;
-        int fuel_sum = 0;
+        double fuel_sum = 0;
+        double entry_fuel, nextval;
 
         int[] data = { 73617,104372,131825,85022,105514,78478,87420,118553,97680,89479,146989,79746,108085,117895,
                 143811,102509,102382,92975,72978,94208,130521,83042,138605,107566,63374,71176,129487,118408,
@@ -22,16 +23,22 @@ public class FuelEstimator {
 
         // iterating over an array
         for (i = 0; i < data.length; i++) {
-            x = data[i];
-            fuel_sum += getFuelForMass(x);
+            entry_fuel = data[i];
+            while (entry_fuel > 0) {
+                nextval = getFuelForMass(entry_fuel);
+                if (getFuelForMass(nextval) > 0) {
+                    fuel_sum += nextval;
+                }
+                entry_fuel = nextval;
+            }
 //            System.out.print(x + " ");
-            System.out.print("Fuel Sum: " + fuel_sum + "\n");
         }
-
+        System.out.print("Fuel Sum: " + fuel_sum + "\n");
+        // 4903642 is too low  => 4903413 also too low
     }
 
 
-    private static Double getFuelForMass(double mass) {
+    private static double getFuelForMass(double mass) {
         return Math.floor(mass / 3) - 2;
     }
 
