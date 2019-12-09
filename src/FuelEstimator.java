@@ -7,6 +7,7 @@ import java.lang.Math;
 public class FuelEstimator {
 
     public static void main(String args[]) {
+        System.out.print("Beginning Run \n");
         int i, x;
         double fuel_sum = 0;
         double entry_fuel, nextval;
@@ -20,26 +21,34 @@ public class FuelEstimator {
                 96212,132002,97405,82629,63717,62805,112693,147810,139827,116220,69711,50236,137833,
                 103743,147456,112098,84867,75615,132738,81072,89444,58443,94465,112494,82127,132533 };
 
+        double example_sum = getFuelForMass(100756);
+        System.out.print("example_sum: " + example_sum + "\n");
+
+//        100756 and its fuel is: 33583 + 11192 + 3728 + 1240 + 411 + 135 + 43 + 12 + 2 = 50346
+//                Given result is actually: 50344
+
 
         // iterating over an array
         for (i = 0; i < data.length; i++) {
             entry_fuel = data[i];
-            while (entry_fuel > 0) {
-                nextval = getFuelForMass(entry_fuel);
-                if (getFuelForMass(nextval) > 0) {
-                    fuel_sum += nextval;
-                }
-                entry_fuel = nextval;
-            }
-//            System.out.print(x + " ");
+            fuel_sum += getFuelForMass(entry_fuel);
         }
         System.out.print("Fuel Sum: " + fuel_sum + "\n");
-        // 4903642 is too low  => 4903413 also too low
+        // 4903642 is too low  => 4903413 also too low, 4903518 if >6 cutoff, 4903584 if >= 6 cutoff
+        // 4903759  
     }
 
 
     private static double getFuelForMass(double mass) {
-        return Math.floor(mass / 3) - 2;
+        int fuel = 0;
+        double nextfuel = Math.floor(mass / 3) - 2;
+        // min value for cutoff is 6
+        while (nextfuel > 0) {
+            fuel += nextfuel;
+            nextfuel = Math.floor(nextfuel / 3) - 2;
+        }
+
+        return fuel;
     }
 
 
