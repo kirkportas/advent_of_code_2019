@@ -35,7 +35,7 @@ public class FuelEstimator {
         }
         System.out.print("Fuel Sum: " + fuel_sum + "\n");
         // 4903642 is too low  => 4903413 also too low, 4903518 if >6 cutoff, 4903584 if >= 6 cutoff
-        // 4903759  
+        // 4903759
     }
 
 
